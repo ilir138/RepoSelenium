@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -50,6 +51,8 @@ public class Homework1 {
         WebDriver driver = new ChromeDriver();
 
         driver.get("https://www.darksky.net");
+        driver.manage().window().maximize();
+
         By feelsLikeLocator = By.xpath("//span[@class='feels-like-text']");
         By lowTempLocator = By.xpath("//span[@class='low-temp-text']");
         By highTempLocator = By.xpath("//span[@class='high-temp-text']");
@@ -63,23 +66,25 @@ public class Homework1 {
         WebElement highTemp = driver.findElement(highTempLocator);
         String highT = highTemp.getText();
 
-        String [] feelsLikes = feelsL.split("\\w");
-        String[] lowTemps = lowT.split("\\w");
-        String [] highTemps = highT.split("\\w");
+        String feelsL2 = feelsL.replace("˚"," ").trim();
 
-        try {
-            int feels = Integer.parseInt(feelsLikes[0]);
-            int low = Integer.parseInt(lowTemps[0]);
-            int high = Integer.parseInt(highTemps[0]);
-        }catch (NumberFormatException e){
-            
-            e.printStackTrace();
+        String lowT2 = lowT.replace("˚"," ").trim();
+
+        String highTt2 = highT.replace("˚"," ").trim();
+
+
+        int feels = Integer.parseInt(feelsL2);
+        int low = Integer.parseInt(lowT2);
+        int high = Integer.parseInt(highTt2);
+
+        if(high>feels && feels>low){
+            System.out.println(feels + " is between " + high + " and " +low);
+        }
+        else {
+            System.out.println(feels + " is not between " + high + " and " +low);
         }
 
-
         driver.close();
-
-
 
 
     }
